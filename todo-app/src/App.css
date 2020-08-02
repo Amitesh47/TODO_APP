@@ -7,11 +7,7 @@
   margin-bottom: 24px;
 }
 
-.todoBody {
-  display: flex;
-  justify-content: center;
-}
-
+.todoBody,
 .flex {
   display: flex;
   justify-content: center;
