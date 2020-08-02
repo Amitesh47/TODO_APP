@@ -8,8 +8,8 @@ import "./TodoBody.css";
 import { NO_ERROR } from "../../Reducers/ErrorReducers/constants";
 
 const TodoBody = (props) => {
-  const [phError, setPhError] = useState("Error");
-  const [passError, setPassError] = useState("Error");
+  const [phError, setPhError] = useState(true);
+  const [passError, setPassError] = useState(true);
   const error = useSelector((state) => state.error);
   const dispatch = useDispatch();
 
@@ -21,14 +21,14 @@ const TodoBody = (props) => {
   };
 
   const updatePhError = () => {
-    setPhError("No Error");
+    setPhError(false);
   };
 
   const updatePassError = () => {
-    setPassError("No Error");
+    setPassError(false);
   };
 
-  if (phError === "No Error" && passError === "No Error") {
+  if (!phError && !passError) {
     dispatch({ type: NO_ERROR });
   }
 
