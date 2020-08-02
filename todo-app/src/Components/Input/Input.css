@@ -1,0 +1,14 @@
+.input {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.inputBox {
+  width: 100%;
+}
+
+.error {
+  color: red;
+  font-size: 10px;
+}
+
