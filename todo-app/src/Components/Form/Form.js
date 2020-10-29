@@ -1,30 +1,38 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row } from "react-bootstrap";
 import { NO_ERROR } from "../../Reducers/ErrorReducers/constants";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import Password from "../Password/Password";
-import './Form.css'
+import "./Form.css";
 
 const Form = (props) => {
   const [phError, setPhError] = useState(true);
   const [passError, setPassError] = useState(true);
+  const [phone, setPhone] = useState();
+  const [password, setPassword] = useState();
   const error = useSelector((state) => state.error);
   const dispatch = useDispatch();
 
   const onSubmit = (event) => {
     event.preventDefault();
+    const userDetails = {
+      phone: parseInt(phone),
+      password,
+    };
     if (error === "No Error") {
-      props.formSubmit();
+      props.formSubmit(userDetails);
     }
   };
 
-  const updatePhError = () => {
+  const updatePhError = (value) => {
+    setPhone(value);
     setPhError(false);
   };
 
-  const updatePassError = () => {
+  const updatePassError = (value) => {
+    setPassword(value);
     setPassError(false);
   };
 

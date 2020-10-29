@@ -7,7 +7,7 @@ const Header = (props) => {
   return (
     <div className="navBar">
       <Container>
-        <NavBar />
+        <NavBar {...props} />
       </Container>
     </div>
   );

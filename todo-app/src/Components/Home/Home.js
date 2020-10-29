@@ -1,33 +1,39 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import RegisteredSuccessfully from "../RegisteredSuccessfully/RegisteredSuccessfully";
 import Registration from "../Registration/Registration";
 import FormContainer from "../FormContainer/FormContainer";
-import { SUCCESS } from "../../Reducers/RegistrationReducers/constants";
+import Header from "../Header/Header";
+import "./Home.css";
 
 const Home = (props) => {
-  const registrationSuccessful = useSelector(
-    (state) => state.registrationSuccess
-  );
+  const userExists = useSelector((state) => state.userAlreadyExists);
   const dispatch = useDispatch();
 
-  const registrationSubmit = () => {
+  const registrationSubmit = (userDetails) => {
     dispatch({
-      type: SUCCESS,
+      type: "REGISTER_USER",
+      userDetails,
     });
   };
 
-  const renderComponent = registrationSuccessful ? (
-    <RegisteredSuccessfully />
-  ) : (
-    <Registration formSubmit={registrationSubmit} />
+
+  const userAlreadyExistContainer = (
+    <FormContainer>
+      <div className="userExist">User already exists with the given number</div>
+    </FormContainer>
   );
 
   return (
-    <FormContainer>
-      <Container>{renderComponent}</Container>
-    </FormContainer>
+    <React.Fragment>
+      <Header buttonValue="SignIn" />
+      <FormContainer>
+        <Container>
+          <Registration formSubmit={registrationSubmit} />
+        </Container>
+      </FormContainer>
+      {userExists ? userAlreadyExistContainer : ""}
+    </React.Fragment>
   );
 };
 

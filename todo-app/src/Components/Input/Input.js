@@ -16,7 +16,7 @@ const Input = (props) => {
       const valueLength = value.toString().length;
       if (valueLength === 10) {
         setError(null);
-        props.updateError();
+        props.updateError(value);
       } else if (valueLength > 10) {
         setError("Phone No cannot be greater than 10");
         dispatch({ type: PHONE_NO_LENGTH_ERROR });

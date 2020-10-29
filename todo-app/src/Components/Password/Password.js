@@ -16,7 +16,7 @@ const Password = (props) => {
       dispatch({ type: PASSWORD_ERROR });
     } else if (password.length >= 8) {
       setError(null);
-      props.updateError()
+      props.updateError(password)
     }
   };
 

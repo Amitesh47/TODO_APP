@@ -5,13 +5,19 @@ import history from "../../Routes/history";
 
 const NavBar = (props) => {
   const onClickHandler = () => {
-    return history.push("/SignIn");
+    return window.location.pathname === "/"
+      ? history.push("/SignIn")
+      : history.push("/");
   };
 
   return (
     <Row>
       <Col lg={{ offset: 10 }}>
-        <Button value="Sign In" type="submit" onClick={() => onClickHandler()} />
+        <Button
+          value={props.buttonValue}
+          type="submit"
+          onClick={() => onClickHandler()}
+        />
       </Col>
     </Row>
   );
