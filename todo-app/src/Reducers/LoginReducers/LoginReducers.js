@@ -1,15 +1,23 @@
-import {
-  SUCCESS
- } from "./constants";
 
- const loginReducers = (state = false, action) => {
-   switch (action.type) {
-     case SUCCESS:
-       return true;
+const loginReducers = (state = {}, { type, phone }) => {
+  let initialState = {}
+  switch (type) {
+    case "LOGIN_SUCCESS":
+      initialState.loginStatus = 'success';
+      initialState.phone = phone;
+      return initialState;
 
-     default:
-       return state;
-   }
- };
+    case "LOGIN_FAILED":
+      initialState.loginStatus = 'failed';
+      initialState.phone = null;
+      return initialState;
 
- export default loginReducers;
+    case "LOGOUT":
+      return initialState;
+
+    default:
+      return state;
+  }
+};
+
+export default loginReducers;

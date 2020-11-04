@@ -1,6 +1,5 @@
-import { put, takeEvery, all } from "redux-saga/effects";
+import { put, all, takeEvery } from "redux-saga/effects";
 import axios from "axios";
-import history from "../Routes/history"
 
 const callApi = async (url, postData = null) => {
   const response = postData
@@ -16,7 +15,7 @@ function* callRegistrationApi(userDetails) {
   );
   if (status === 200) {
     yield put({ type: "USER_EXISTS", value: false });
-    history.push("/registeredSuccess")
+    yield put({ type: "REGISTRATION_SUCCESS" });
   }
 }
 
@@ -36,14 +35,23 @@ function* registerUserCall({ userDetails }) {
   }
 }
 
-function* registrationCall() {
-  yield takeEvery("REGISTRATION_CALL", callRegistrationApi);
-}
-
-function* registerUser() {
-  yield takeEvery("REGISTER_USER", registerUserCall);
+function* loginCallApi({ loginDetails }) {
+  const { data, status } = yield callApi("http://localhost:3333/apis/login", {
+    phone: loginDetails.phone,
+    password: loginDetails.password
+  });
+  if (status === 200) {
+    const { loginStatus, phone } = data;
+    if (loginStatus) {
+      return yield put({ type: "LOGIN_SUCCESS", phone });
+    }
+    return yield put({ type: "LOGIN_FAILED" });
+  }
 }
 
 export default function* rootSaga() {
-  yield all([registrationCall(), registerUser()]);
+  yield all([
+    takeEvery("REGISTER_USER", registerUserCall),
+    takeEvery("LOGIN", loginCallApi),
+  ]);
 }

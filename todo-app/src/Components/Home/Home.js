@@ -4,10 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import Registration from "../Registration/Registration";
 import FormContainer from "../FormContainer/FormContainer";
 import Header from "../Header/Header";
+import RegisteredSuccessfully from "../RegisteredSuccessfully/RegisteredSuccessfully";
 import "./Home.css";
 
 const Home = (props) => {
   const userExists = useSelector((state) => state.userAlreadyExists);
+  const registeredSuccessfully = useSelector(
+    (state) => state.registrationSuccess
+  );
   const dispatch = useDispatch();
 
   const registrationSubmit = (userDetails) => {
@@ -16,7 +20,6 @@ const Home = (props) => {
       userDetails,
     });
   };
-
 
   const userAlreadyExistContainer = (
     <FormContainer>
@@ -29,7 +32,11 @@ const Home = (props) => {
       <Header buttonValue="SignIn" />
       <FormContainer>
         <Container>
-          <Registration formSubmit={registrationSubmit} />
+          {registeredSuccessfully ? (
+            <RegisteredSuccessfully />
+          ) : (
+            <Registration formSubmit={registrationSubmit} />
+          )}
         </Container>
       </FormContainer>
       {userExists ? userAlreadyExistContainer : ""}

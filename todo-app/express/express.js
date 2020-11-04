@@ -24,16 +24,39 @@ app.post("/apis/addUser", (req, res) => {
 
 app.post("/apis/allUsers", (req, res) => {
   const enteredPhone = req.body.phone;
-  let userList = [];
-  Users.find({})
-    .then((users) => {
-      users.forEach((user) => userList.push(user.phone));
-      return userList.includes(enteredPhone)
-      ? res.send({ validUser: false })
-      : res.send({ validUser: true });
+  Users.findOne({ phone: enteredPhone })
+    .then((user) => {
+      if (user) {
+        return res.send({
+          validUser: false,
+        });
+      }
+      return res.send({
+        validUser: true,
+      });
     })
-    .catch((e) => {
-      res.status(500).send();
+    .catch(() => {
+      res.status(500);
+    });
+});
+
+app.post("/apis/login", (req, res) => {
+  const enteredPhone = req.body.phone;
+  const password = req.body.password;
+  Users.findOne({ phone: enteredPhone })
+    .then((user) => {
+      if (user && user.password === password) {
+        return res.send({
+          loginStatus: true,
+          phone: user.phone,
+        });
+      }
+      return res.send({
+        loginFailed: true,
+      })
+    })
+    .catch(() => {
+      res.status(500);
     });
 });
 

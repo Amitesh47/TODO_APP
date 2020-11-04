@@ -1,10 +1,14 @@
 import { combineReducers } from "redux";
 import errorReducers from "./ErrorReducers/ErrorReducers";
-import userAlreadyExistsReducer from './UserExistReducer/UserExistReducers'
+import userAlreadyExistsReducer from "./UserExistReducer/UserExistReducers";
+import successfulRegistrationReducer from "./SuccessfulRegistrationReducers/SuccessfulRegistrationReducer";
+import loginReducers from "./LoginReducers/LoginReducers";
 
 const combinedReducers = combineReducers({
   error: errorReducers,
   userAlreadyExists: userAlreadyExistsReducer,
+  registrationSuccess: successfulRegistrationReducer,
+  loginDetails: loginReducers,
 });
 
 export default combinedReducers;
