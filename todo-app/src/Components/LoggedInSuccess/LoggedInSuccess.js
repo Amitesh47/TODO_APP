@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import Header from "../Header/Header";
 import LoginTitle from "../LoginTitle/LoginTitle";
 import TaskList from "../TaskList/TaskList";
-import "./LoggedInSuccess.css";
 
 const LoggedInSuccess = (props) => {
   const loginDetails = useSelector((state) => state.loginDetails);
