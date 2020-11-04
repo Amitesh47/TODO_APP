@@ -1,11 +1,19 @@
-import React from 'react';
+import React from "react";
+import { useSelector } from "react-redux";
+import Header from "../Header/Header";
+import LoginTitle from "../LoginTitle/LoginTitle";
+import TaskList from "../TaskList/TaskList";
+import "./LoggedInSuccess.css";
 
 const LoggedInSuccess = (props) => {
+  const loginDetails = useSelector((state) => state.loginDetails);
   return (
-    <div>
-      Logged In Successfully
-      </div>
-  )
-}
+    <React.Fragment>
+      <Header buttonValue="Logout" href="/" />
+      <LoginTitle phone={loginDetails.phone} />
+      <TaskList />
+    </React.Fragment>
+  );
+};
 
-export default LoggedInSuccess
+export default LoggedInSuccess;

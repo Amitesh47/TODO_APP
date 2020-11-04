@@ -1,10 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Container } from "react-bootstrap";
 import Form from "../Form/Form";
 import FormContainer from "../FormContainer/FormContainer";
 import FormBody from "../FormBody/FormBody";
 import Header from "../Header/Header";
 import LoggedInSuccess from "../LoggedInSuccess/LoggedInSuccess";
+import "./SignIn.css"
 
 const SignIn = (props) => {
   // const loginSuccessful = useSelector((state) => state.loginSuccess);
@@ -24,11 +26,15 @@ const SignIn = (props) => {
       <React.Fragment>
         <Header buttonValue="Register" />
         <FormContainer>
-          <FormBody>
-            <Form submitButtonText="Sign In" formSubmit={loginSubmit} />
-          </FormBody>
+          <Container>
+            <FormBody>
+              <Form submitButtonText="Sign In" formSubmit={loginSubmit} />
+            </FormBody>
+            {loginDetails.loginStatus === "failed" ? (
+              <div className="loginFailed">Login Failed</div>
+            ) : null}
+          </Container>
         </FormContainer>
-        {loginDetails.loginStatus === "failed" ? <div>Login Failed</div> : null}
       </React.Fragment>
     );
   };

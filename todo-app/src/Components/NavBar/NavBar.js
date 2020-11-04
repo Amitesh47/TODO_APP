@@ -14,6 +14,11 @@ const NavBar = (props) => {
         value: false
       })
     }
+    else if(props.buttonValue === 'Logout'){
+      dispatch({
+        type: "LOGOUT"
+      })
+    }
     return window.location.pathname === "/"
       ? history.push("/SignIn")
       : history.push("/");
@@ -26,6 +31,7 @@ const NavBar = (props) => {
           value={props.buttonValue}
           type="submit"
           onClick={() => onClickHandler()}
+          href={props.href}
         />
       </Col>
     </Row>
