@@ -6,11 +6,21 @@ import TaskList from "../TaskList/TaskList";
 
 const LoggedInSuccess = (props) => {
   const loginDetails = useSelector((state) => state.loginDetails);
+  const userTasksDetails = useSelector((state) => state.userTasksDetails);
+
   return (
     <React.Fragment>
       <Header buttonValue="Logout" href="/" />
-      <LoginTitle phone={loginDetails.phone} />
-      <TaskList />
+      <LoginTitle
+        phone={loginDetails.phone}
+        userTasksDetails={userTasksDetails}
+      />
+      {userTasksDetails.taskCount > 0 &&
+        userTasksDetails.taskList.map((eachTask) => {
+          return (
+            <TaskList key={eachTask.taskId} taskName={eachTask.taskName} />
+          );
+        })}
     </React.Fragment>
   );
 };

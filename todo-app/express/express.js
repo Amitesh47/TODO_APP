@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("../mongodb/mongodb");
 const Users = require("../mongodb/models/users");
+const Tasks = require("../mongodb/models/tasks");
 
 const app = express();
 app.use(express.json()); // it parses an upcoming json into an object
@@ -9,9 +10,11 @@ app.use(cors()); // used this as our server ran on diff port and our client on d
 
 app.post("/apis/addUser", (req, res) => {
   const newUser = new Users(req.body);
+  const newUserTaskList = new Tasks({ userPhone: req.body.phone });
   newUser
     .save()
     .then(() => {
+      newUserTaskList.save();
       res.send({
         phone: newUser.phone,
         userAdded: true,
@@ -53,11 +56,46 @@ app.post("/apis/login", (req, res) => {
       }
       return res.send({
         loginFailed: true,
-      })
+      });
     })
     .catch(() => {
       res.status(500);
     });
+});
+
+app.post("/apis/fetchAllTasks", (req, res) => {
+  Tasks.findOne({ userPhone: req.body.phone })
+    .then((task) => {
+      if (task) {
+        return res.send({
+          userPhone: task.userPhone,
+          taskList: task.taskList,
+          taskCount: task.taskCount,
+        });
+      }
+    })
+    .catch(() => {
+      res.status(500);
+    });
+});
+
+app.post("/apis/addNewTask", (req, res) => {
+  Tasks.findOneAndUpdate(
+    { userPhone: req.body.userPhone },
+    req.body,
+    { new: true },
+    (err, updatedTask) => {
+      if (err) {
+        return res.status(500)
+      } else {
+        return res.send({
+          userPhone: updatedTask.userPhone,
+          taskList: updatedTask.taskList,
+          taskCount: updatedTask.taskCount,
+        });
+      }
+    }
+  );
 });
 
 app.listen(3333, () => {

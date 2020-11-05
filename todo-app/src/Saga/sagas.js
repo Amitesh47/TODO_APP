@@ -38,14 +38,43 @@ function* registerUserCall({ userDetails }) {
 function* loginCallApi({ loginDetails }) {
   const { data, status } = yield callApi("http://localhost:3333/apis/login", {
     phone: loginDetails.phone,
-    password: loginDetails.password
+    password: loginDetails.password,
   });
   if (status === 200) {
     const { loginStatus, phone } = data;
     if (loginStatus) {
-      return yield put({ type: "LOGIN_SUCCESS", phone });
+      yield put({ type: "LOGIN_SUCCESS", phone });
+      const { data, status } = yield callApi(
+        "http://localhost:3333/apis/fetchAllTasks",
+        {
+          phone: loginDetails.phone,
+        }
+      );
+      if (status === 200) {
+        return yield put({
+          type: "FETCH_ALL_TASKS",
+          data,
+        });
+      }
     }
     return yield put({ type: "LOGIN_FAILED" });
+  }
+}
+
+function* addNewTaskApiCall({ newTaskDetails }) {
+  const { data, status } = yield callApi(
+    "http://localhost:3333/apis/addNewTask",
+    {
+      userPhone: newTaskDetails.userPhone,
+      taskCount: newTaskDetails.taskCount,
+      taskList: newTaskDetails.taskList,
+    }
+  );
+  if (status === 200) {
+    return yield put({
+      type: "FETCH_ALL_TASKS",
+      data,
+    });
   }
 }
 
@@ -53,5 +82,6 @@ export default function* rootSaga() {
   yield all([
     takeEvery("REGISTER_USER", registerUserCall),
     takeEvery("LOGIN", loginCallApi),
+    takeEvery("ADD_NEW_TASK", addNewTaskApiCall),
   ]);
 }
