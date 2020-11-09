@@ -1,10 +1,13 @@
 const userTaskReducers = (state = {}, { type, data }) => {
+  let updateState = {};
   switch (type) {
     case "FETCH_ALL_TASKS":
-      return data;
+    case "EDIT_TASK":
+      updateState = data;
+      return updateState;
     default:
       return state;
   }
 };
 
-export default userTaskReducers
+export default userTaskReducers;

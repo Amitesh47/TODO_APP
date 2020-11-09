@@ -18,7 +18,11 @@ const LoggedInSuccess = (props) => {
       {userTasksDetails.taskCount > 0 &&
         userTasksDetails.taskList.map((eachTask) => {
           return (
-            <TaskList key={eachTask.taskId} taskName={eachTask.taskName} />
+            <TaskList
+              key={eachTask.taskId}
+              id={eachTask.taskId}
+              taskName={eachTask.taskName}
+            />
           );
         })}
     </React.Fragment>

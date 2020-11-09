@@ -54,6 +54,8 @@ const LoginTitle = (props) => {
           closeModalHandler={closeModalHandler}
           saveTaskHandler={saveTaskHandler}
           onChangeHandler={onChangeHandler}
+          value="Add"
+          modalTitle="Add A New Task"
         />
       )}
     </React.Fragment>
