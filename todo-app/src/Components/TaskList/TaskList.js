@@ -12,7 +12,6 @@ const TaskList = (props) => {
   const [newTaskValue, setNewTaskValue] = useState();
   const userTasksDetails = useSelector((state) => state.userTasksDetails);
   const dispatch = useDispatch();
-  // console.log("TASK_LIST", userTaskList);
 
   const editHandler = () => {
     setShowModal(true);
@@ -28,16 +27,15 @@ const TaskList = (props) => {
   };
 
   const saveTaskHandler = () => {
-    userTasksDetails.taskList.map((eachTask) => {
-      if (eachTask.taskId === props.id) {
-        userTasksDetails.taskList[props.id - 1].taskName = newTaskValue;
+    userTasksDetails.taskList.map((eachTask, index) => {
+      if (index === props.id) {
         setShowModal(false);
         dispatch({
-          type: "ADD_NEW_TASK", // Doing this as I dont want to add any extra api call
-          newTaskDetails: {
-            taskCount: userTasksDetails.taskCount,
-            taskList: userTasksDetails.taskList,
+          type: "EDIT_TASK",
+          taskDetails: {
             userPhone: userTasksDetails.userPhone,
+            prevTaskValue: eachTask,
+            newTaskValue,
           },
         });
       }
@@ -45,9 +43,7 @@ const TaskList = (props) => {
     });
   };
 
-  const deleteHandler = () => {
-
-  };
+  const deleteHandler = () => {};
 
   return (
     <React.Fragment>

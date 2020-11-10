@@ -78,10 +78,28 @@ function* addNewTaskApiCall({ newTaskDetails }) {
   }
 }
 
+function* editTaskApiCall({ taskDetails }) {
+  const { data, status } = yield callApi(
+    "http://localhost:3333/apis/editTask",
+    {
+      userPhone: taskDetails.userPhone,
+      prevTaskValue: taskDetails.prevTaskValue,
+      newTaskValue: taskDetails.newTaskValue,
+    }
+  );
+  if (status === 200) {
+    yield put({
+      type : "EDIT_TASK_SUCCESS",
+      data
+    });
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery("REGISTER_USER", registerUserCall),
     takeEvery("LOGIN", loginCallApi),
     takeEvery("ADD_NEW_TASK", addNewTaskApiCall),
+    takeEvery("EDIT_TASK", editTaskApiCall),
   ]);
 }

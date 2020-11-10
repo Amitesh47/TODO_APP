@@ -16,12 +16,12 @@ const LoggedInSuccess = (props) => {
         userTasksDetails={userTasksDetails}
       />
       {userTasksDetails.taskCount > 0 &&
-        userTasksDetails.taskList.map((eachTask) => {
+        userTasksDetails.taskList.map((eachTask,index) => {
           return (
             <TaskList
-              key={eachTask.taskId}
-              id={eachTask.taskId}
-              taskName={eachTask.taskName}
+              key={index}
+              id={index}
+              taskName={eachTask}
             />
           );
         })}

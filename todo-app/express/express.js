@@ -86,7 +86,27 @@ app.post("/apis/addNewTask", (req, res) => {
     { new: true },
     (err, updatedTask) => {
       if (err) {
-        return res.status(500)
+        return res.status(500);
+      } else {
+        return res.send({
+          userPhone: updatedTask.userPhone,
+          taskList: updatedTask.taskList,
+          taskCount: updatedTask.taskCount,
+        });
+      }
+    }
+  );
+});
+
+app.post("/apis/editTask", (req, res) => {
+  console.log(req.body);
+  Tasks.findOneAndUpdate(
+    { userPhone: req.body.userPhone, taskList: req.body.prevTaskValue },
+    { "taskList.$": req.body.newTaskValue },
+    { new: true },
+    (err, updatedTask) => {
+      if (err) {
+        return res.status(500);
       } else {
         return res.send({
           userPhone: updatedTask.userPhone,

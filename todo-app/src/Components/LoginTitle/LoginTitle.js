@@ -21,10 +21,7 @@ const LoginTitle = (props) => {
     const newTaskDetails = {
       userPhone: props.phone,
       taskCount: props.userTasksDetails.taskCount + 1,
-      taskList: [
-        ...props.userTasksDetails.taskList,
-        { taskId: props.userTasksDetails.taskCount + 1, taskName: newTaskValue },
-      ],
+      taskList: [...props.userTasksDetails.taskList, newTaskValue],
     };
     dispatch({
       type: "ADD_NEW_TASK",
