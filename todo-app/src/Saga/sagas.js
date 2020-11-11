@@ -89,9 +89,25 @@ function* editTaskApiCall({ taskDetails }) {
   );
   if (status === 200) {
     yield put({
-      type : "EDIT_TASK_SUCCESS",
-      data
+      type: "EDIT_TASK_SUCCESS",
+      data,
     });
+  }
+}
+
+function* deleteTaskApiCall({ taskDetails }) {
+  const { data, status } = yield callApi(
+    "http://localhost:3333/apis/deleteTask",
+    {
+      userPhone: taskDetails.userPhone,
+      taskName: taskDetails.taskName,
+    }
+  );
+  if(status === 200) {
+    yield put({
+      type:"DELETE_TASK_SUCCESS",
+      data
+    })
   }
 }
 
@@ -101,5 +117,6 @@ export default function* rootSaga() {
     takeEvery("LOGIN", loginCallApi),
     takeEvery("ADD_NEW_TASK", addNewTaskApiCall),
     takeEvery("EDIT_TASK", editTaskApiCall),
+    takeEvery("DELETE_TASK", deleteTaskApiCall),
   ]);
 }

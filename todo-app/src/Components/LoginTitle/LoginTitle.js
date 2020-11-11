@@ -7,6 +7,7 @@ import "./LoginTitle.css";
 const LoginTitle = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [newTaskValue, setNewTaskValue] = useState(null);
+  const [taskExist, setTaskExist] = useState(false);
   const dispatch = useDispatch();
 
   const addNewTaskHandler = () => {
@@ -15,9 +16,13 @@ const LoginTitle = (props) => {
 
   const closeModalHandler = () => {
     setShowModal(false);
+    setTaskExist(false);
   };
 
   const saveTaskHandler = () => {
+    if (props.userTasksDetails.taskList.includes(newTaskValue)) {
+      return setTaskExist(true);
+    }
     const newTaskDetails = {
       userPhone: props.phone,
       taskCount: props.userTasksDetails.taskCount + 1,
@@ -28,6 +33,7 @@ const LoginTitle = (props) => {
       newTaskDetails,
     });
     setShowModal(false);
+    setTaskExist(false);
   };
 
   const onChangeHandler = (event) => {
@@ -53,6 +59,7 @@ const LoginTitle = (props) => {
           onChangeHandler={onChangeHandler}
           value="Add"
           modalTitle="Add A New Task"
+          taskExist={taskExist}
         />
       )}
     </React.Fragment>

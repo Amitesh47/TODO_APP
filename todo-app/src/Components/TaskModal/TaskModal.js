@@ -16,6 +16,7 @@ const TaskModal = (props) => {
           placeholder={props.inputValue ? props.inputValue : "Enter a New Task"}
           onChange={(e) => props.onChangeHandler(e)}
         />
+        {props.taskExist && <span className="taskExist">Task Already exists</span>}
       </Modal.Body>
       <Modal.Footer>
         <Button value="Close" onClick={props.closeModalHandler} />

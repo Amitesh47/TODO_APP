@@ -43,7 +43,15 @@ const TaskList = (props) => {
     });
   };
 
-  const deleteHandler = () => {};
+  const deleteHandler = () => {
+    dispatch({
+      type : "DELETE_TASK",
+      taskDetails : {
+        userPhone : userTasksDetails.userPhone,
+        taskName : props.taskName
+      }
+    })
+  };
 
   return (
     <React.Fragment>

@@ -99,7 +99,6 @@ app.post("/apis/addNewTask", (req, res) => {
 });
 
 app.post("/apis/editTask", (req, res) => {
-  console.log(req.body);
   Tasks.findOneAndUpdate(
     { userPhone: req.body.userPhone, taskList: req.body.prevTaskValue },
     { "taskList.$": req.body.newTaskValue },
@@ -107,6 +106,25 @@ app.post("/apis/editTask", (req, res) => {
     (err, updatedTask) => {
       if (err) {
         return res.status(500);
+      } else {
+        return res.send({
+          userPhone: updatedTask.userPhone,
+          taskList: updatedTask.taskList,
+          taskCount: updatedTask.taskCount,
+        });
+      }
+    }
+  );
+});
+
+app.post("/apis/deleteTask", (req, res) => {
+  Tasks.findOneAndUpdate(
+    { userPhone: req.body.userPhone },
+    { $pull: { taskList: req.body.taskName }, $inc: { taskCount: -1 } },
+    { new: true },
+    (err, updatedTask) => {
+      if (err) {
+        return res.send(500);
       } else {
         return res.send({
           userPhone: updatedTask.userPhone,

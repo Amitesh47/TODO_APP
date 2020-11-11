@@ -3,6 +3,7 @@ const userTaskReducers = (state = {}, { type, data }) => {
   switch (type) {
     case "FETCH_ALL_TASKS":
     case "EDIT_TASK_SUCCESS":
+    case "DELETE_TASK_SUCCESS":
       updateState = data;
       return updateState;
     default:
